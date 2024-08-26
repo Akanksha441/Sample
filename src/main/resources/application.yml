@@ -1,0 +1,51 @@
+#spring:
+#  redis:
+#    redisson:
+#      config: |
+#        clusterServersConfig:
+#          idleConnectionTimeout: 10000
+#          connectTimeout: 10000
+#          timeout: 3000
+#          retryAttempts: 3
+#          retryInterval: 1500
+#          failedSlaveReconnectionInterval: 3000
+#          failedSlaveCheckInterval: 60000
+#          subscriptionsPerConnection: 5
+#          clientName: null
+#          loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+#          subscriptionConnectionMinimumIdleSize: 1
+#          subscriptionConnectionPoolSize: 50
+#          slaveConnectionMinimumIdleSize: 8
+#          slaveConnectionPoolSize: 24
+#          masterConnectionMinimumIdleSize: 8
+#          masterConnectionPoolSize: 24
+#          nodeAddresses:
+#          - "redis://localhost:6379"
+#          sslEnableEndpointIdentification: false
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    redisson:
+      config: |
+        singleServerConfig:
+          address: "redis://127.0.0.1:6379"
+        codec: !<org.redisson.codec.Kryo5Codec> {}
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.redisson.cluster.ClusterConnectionManager: INFO
+    org.dt.core.platform.caching: DEBUG
+    org.redisson: DEBUG
+    org.redisson.connection.DNSMonitor: INFO
+server:
+  port: 8181
